@@ -6,14 +6,16 @@ Dopo che sono stati inseriti i 5 numeri, il software dice quanti e quali dei num
 
 // VARIABILI PREIMPOSTATE
     // ARRAY'S
-const startRandomNumbers = [];
+const startRandomNumbers = creaArrRandomNum(1, 100, 5);
+const indovinati = [];
+const sbagliati = [];
     // HTML ELEMENTS
 const startContainer = document.getElementById("container");
 // const finishContainer = document.getElementById("numbers");
 
 // GENERA 5 NUMERI RANDOM DA PUSHARE IN UN ARRAY
-creaArrRandomNum(1, 100, 5);
-startRandomNumbers.push(creaArrRandomNum(1, 100, 5));
+// creaArrRandomNum(1, 100, 5);
+// startRandomNumbers.push(creaArrRandomNum(1, 100, 5));
 console.log("I 5 numeri iniziali sono: " + startRandomNumbers);
 
 // MOSTRA I NUMRI GENERATI SULLO SCHERMO
@@ -21,7 +23,7 @@ startContainer.append(startRandomNumbers);
 
 // DOPO 30 SECONDI I NUMERI SPARISCONO e parte il gioco
 
-setTimeout(simonGame, 4000);
+setTimeout(simonGame, 3000);
 
 
 
@@ -30,39 +32,36 @@ function simonGame (){
     startContainer.classList.add ("hidden");
     // chiedo all'utente per 5 volte di inserire un numero
 
-    // setTimeout(() => {
+    setTimeout(() => {
         const arrayNumUtente = [];
 
         while (arrayNumUtente.length < 5){
             let userNumber = parseInt(prompt("inserisci uno dei 5 numeri che ti ricordi"));
-            if (!arrayNumUtente.includes(userNumber))
-            arrayNumUtente.push(userNumber);
+            if (!arrayNumUtente.includes(userNumber)){
+                arrayNumUtente.push(userNumber);
+            }
         }
-        console.log("i numeri indicati sono: " + arrayNumUtente);
+        console.log("i 5 numeri indicati sono: " + arrayNumUtente);
 
         // VERIFICO SE I NUMERI COMBACIANO CON I 5 RANDOM
-        const numerIndovinati = [];
-        const numeriSbagliati = [];
-                        // QUA VI è un errore che non riesco a trovare. mi si pusha tutto nei numeri sbagliati
-        for (i = 0; i <= 4; i++) {
 
-            if (arrayNumUtente.includes(startRandomNumbers[i])) {
-                numerIndovinati.push(startRandomNumbers[i]);
+        for (let i = 0; i <= 4; i++){
+            if (startRandomNumbers.includes(arrayNumUtente[i])){
+                indovinati.push(startRandomNumbers[i]);
             } else {
-                numeriSbagliati.push(startRandomNumbers[i]);
+                sbagliati.push(startRandomNumbers[i]);
             }
-    
         }
-        // console.log("indovinati: " + numerIndovinati);
-        // console.log("sbagliati: " + numeriSbagliati);
+        console.log("indovinati: " + indovinati);
+        console.log("sbagliati: " + sbagliati);
         
         // DICHIARO ALL'UTENTE SE HA VINTO O A PERSO e gli mostro i numeri indovinati o quelli sbagliati
-        if (numeriSbagliati.length >= 1){
-            console.log("HAI PERSO. HAI DIMENTICATO I NUMERI: " + numeriSbagliati);
+        if (sbagliati.length >= 1){
+            console.log("HAI PERSO. HAI DIMENTICATO I NUMERI: " + sbagliati);
         } else {
-            console.log("HAI VINTO. Ecco i numeri indovinati: " + numerIndovinati);
+            console.log("HAI VINTO. Ecco i numeri indovinati: " + indovinati);
         }
-    // }, 1);
+    }, 1);
 }
     
 
